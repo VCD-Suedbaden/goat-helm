@@ -79,18 +79,46 @@ frontend:
 
 postgresql:
   enabled: true
+  auth:
+    username: goat
+    password: ""
+    database: goat
+  ## if enabled
+  primary:
+    persistence:
+      enabled: true
+      size: 8Gi
+      storageClass: ""
 
 redis:
-  enabled: true
+  enabled: true 
+  port: 6379
+  auth:
+    password: ""
+    existingSecret: ""
+  architecture: standalone 
+  master.persistence.enabled: false
 
 rabbitmq:
   enabled: true
+  auth:
+    username: goat
+    password:
+  persistence:
+    enabled: true
+    size: 8Gi
+    storageClass: ""
 
 mongodb:
   enabled: true
-
-r5:
-  enabled: true
+  auth:
+    username: goat
+    password:
+    database: goat
+  persistence:
+    enabled: true
+    size: 8Gi
+    storageClass: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
