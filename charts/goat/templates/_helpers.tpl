@@ -60,3 +60,25 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Return the path to redis
+*/}}
+{{- define "goat.redisHost" -}}
+{{- if  .Values.redis.enabled }}    
+    {{- printf "%s-redis-master.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
+{{- else -}}
+    {{- printf  .Values.redis.host  -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the path to rabbitmq
+*/}}
+{{- define "goat.rabbitmqHost" -}}
+{{- if  .Values.rabbitmq.enabled }}    
+    {{- printf "%s-rabbitmq.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
+{{- else -}}
+    {{- printf  .Values.rabbitmq.host  -}}
+{{- end -}}
+{{- end -}}
