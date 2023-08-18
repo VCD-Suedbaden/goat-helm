@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ printf "env-backend-%s" .Release.Name }}
-data:
-  {{- .Values.backend.env | toYaml | trim | nindent 2 }}
