@@ -7,7 +7,7 @@ data:
   SERVER_NAME: {{ .Values.host | quote}}
   SERVER_HOST: {{ printf "https://%s" .Values.host | quote}}
   AWS_ACCESS_KEY_ID: {{ .Values.AWS.keyID | quote}}
-  POSTGRES_SERVER: {{ .Values.postgresql.auth.host | quote}}
+  POSTGRES_SERVER: {{ include "goat.postgresqlHost" . }}
   POSTGRES_DB: {{ .Values.postgresql.auth.database | quote}}
   POSTGRES_USER: {{ .Values.postgresql.auth.username | quote}}
   SENTRY_DSN: {{ .Values.sentryDSN | quote}}

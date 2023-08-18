@@ -44,7 +44,7 @@ smtp:
   host: ""
   user: ""
   password: ""
-  fromEmail: ""
+  fromEmail: "example@example.com"
 AWS:
   keyID: ""
   accessKey: ""
