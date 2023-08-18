@@ -82,3 +82,14 @@ Return the path to rabbitmq
     {{- printf  .Values.rabbitmq.host  -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Return the path to postgres
+*/}}
+{{- define "goat.postgresqlHost" -}}
+{{- if  .Values.rabbitmq.enabled }}    
+    {{- printf "%s-postgresql.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
+{{- else -}}
+    {{- printf  .Values.postgresql.auth.host  -}}
+{{- end -}}
+{{- end -}}
