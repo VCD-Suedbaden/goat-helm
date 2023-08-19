@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: r5
+  name: r5-frontend
   labels:
     {{- include "common.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.frontend.replica }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: r5
+      app.kubernetes.io/name: r5-frontend
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -16,7 +16,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        app.kubernetes.io/name: r5
+        app.kubernetes.io/name: goat-frontend
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -28,32 +28,20 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.r5.image.repository }}:{{ .Values.r5.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.r5.frontend.image.repository }}:{{ .Values.r5.frontend.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
-          env:
-            - name: database-uri
-              value: {{ include "goat.mongodbString" . }}
-          envFrom:
-           - secretRef:
-              name: {{ printf "secrets-%s" .Release.Name  }}
           ports:
             - name: http
-              containerPort: 7080
+              containerPort: 80
               protocol: TCP
           livenessProbe:
-            tcpSocket:
-              port: 7080
-            timeoutSeconds: 3
-            periodSeconds: 10
-            successThreshold: 1
-            failureThreshold: 10
+            httpGet:
+              path: /
+              port: 80
           readinessProbe:
-            tcpSocket:
-              port: 7080
-            timeoutSeconds: 3
-            periodSeconds: 10
-            successThreshold: 1
-            failureThreshold: 10
+            httpGet:
+              path: /
+              port: 80
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

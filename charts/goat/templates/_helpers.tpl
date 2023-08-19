@@ -93,3 +93,14 @@ Return the path to postgres
     {{- printf  .Values.postgresql.auth.host  -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Return the path to mongodb
+*/}}
+{{- define "goat.mongodbString" -}}
+{{- if  .Values.mongodb.enabled }}    
+    {{- printf "mongodb://%s:%s@%s-mongodb.%s.svc.cluster.local:27017/?authMechanism=DEFAULT" .Values.mongodb.auth.username .Values.mongodb.auth.password .Release.Name .Release.Namespace  -}}
+{{- else -}}
+    {{- printf "mongodb://%s:%s@%s:%s/?authMechanism=DEFAULT" .Values.mongodb.auth.username .Values.mongodb.auth.password .Values.mongodb.host .Values.mongodb.port  -}}
+{{- end -}}
+{{- end -}}

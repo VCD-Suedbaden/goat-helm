@@ -98,7 +98,17 @@ r5:
   host: 172.17.0.1
   authorisation: YWRtaW46YWRtaW4 
   jvmHeapGb: 4
+  database-uri: 
+  database: "r5"
   image:
+    registry: docker.io
+    repository: majkshkurti/conveyal-r5
+    tag: "6.4-p2"
+    digest: ""
+    pullPolicy: IfNotPresent
+    pullSecrets: []
+  frontend:
+    image:
     registry: docker.io
     repository: majkshkurti/conveyal-r5
     tag: "6.4-p2"
@@ -145,6 +155,8 @@ rabbitmq:
 
 mongodb:
   enabled: false
+  host:
+  port:
   auth:
     username: goat
     password:
