@@ -68,6 +68,15 @@ vue:
   fontawesomeToken:
 sentryDSN: ""
 namespace: ""
+dashboard:
+  enabled: true
+  image:
+    registry: docker.io
+    repository: josaur/goat
+    tag: "dashboard"
+    digest: ""
+    pullPolicy: IfNotPresent
+    pullSecrets: []
 
 backend:
   image:
