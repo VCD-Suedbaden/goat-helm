@@ -49,10 +49,7 @@ AWS:
   keyID: ""
   accessKey: ""
   bucket: ""
-r5:
-  host: 172.17.0.1
-  authorisation: YWRtaW46YWRtaW4 
-  jvmHeapGb: 4 
+
 celeryd:
   queues: ""
   brokerUrl: ""
@@ -96,6 +93,20 @@ frontend:
     pullSecrets: []
   env:
   replica: 1
+
+r5:
+  host: 172.17.0.1
+  authorisation: YWRtaW46YWRtaW4 
+  jvmHeapGb: 4
+  image:
+    registry: docker.io
+    repository: majkshkurti/conveyal-r5
+    tag: "6.4-p2"
+    digest: ""
+    pullPolicy: IfNotPresent
+    pullSecrets: []
+
+
 
 postgresql:
   enabled: false
