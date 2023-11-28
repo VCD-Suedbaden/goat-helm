@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: goat-backend
+  name: goat-worker
   labels:
     {{- include "common.labels" . | nindent 4 }}
 spec:
@@ -26,6 +26,12 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
+          command: 
+            - "bash"
+            - "-c"
+            - |
+              /etc/init.d/celeryd start
+              sleep infinity
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag | default .Chart.AppVersion }}"
@@ -36,7 +42,9 @@ spec:
            - secretRef:
               name: {{ printf "secrets-%s" .Release.Name  }}
           ports:
-            - containerPort: 5000
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

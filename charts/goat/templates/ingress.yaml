@@ -53,5 +53,12 @@ spec:
               service:
                 name: goat-frontend
                 port:
+                  number: 80
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: goat-backend
+                port:
                   number: 80          
               {{- end }}
