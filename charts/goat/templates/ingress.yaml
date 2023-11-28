@@ -40,6 +40,13 @@ spec:
     - host: {{ .Values.ingress.host | quote }}
       http:
         paths:
+          - path: /dashboard
+            pathType: Prefix
+            backend:
+              service:
+                name: goat-dashboard
+                port:
+                  number: 80
           - path: /
             pathType: Prefix
             backend:
@@ -47,4 +54,11 @@ spec:
                 name: goat-frontend
                 port:
                   number: 80
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: goat-backend
+                port:
+                  number: 80          
               {{- end }}
